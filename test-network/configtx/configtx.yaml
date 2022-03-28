@@ -201,7 +201,7 @@ Application: &ApplicationDefaults
 Orderer: &OrdererDefaults
 
     # Orderer Type: The orderer implementation to start
-    OrdererType: etcdraft
+    OrdererType: smartbft
     # Addresses used to be the list of orderer addresses that clients and peers
     # could connect to.  However, this does not allow clients to associate orderer
     # addresses and orderer organizations which can be useful for things such
@@ -216,6 +216,16 @@ Orderer: &OrdererDefaults
           Port: 7050
           ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
           ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+
+    SmartBFT:
+        Consenters:
+        - Host: orderer.example.com
+          Port: 7050
+          MSPID: OrdererMSP
+          ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+          ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+          Identity: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/signcerts/orderer.example.com-cert.pem
+          ConsenterId: 1
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -304,6 +314,40 @@ Profiles:
         <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+            Capabilities: *ApplicationCapabilities
+
+    SmapleBFTNetwork:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: smartbft
+            SmartBFT:
+                Consenters:
+                - Host: orderer.example.com
+                  Port: 7050
+                  MSPID: OrdererMSP
+                  ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+                  ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+                  Identity: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/signcerts/orderer.example.com-cert.pem
+                  ConsenterId: 1
+                - Host: orderer1.example.com
+                  Port: 7050
+                  MSPID: OrdererMSP
+                  ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+                  ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+                  Identity: ../organizations/ordererOrganizations/example.com/orderers/orderer1.example.com/msp/signcerts/orderer1.example.com-cert.pem
+                  ConsenterId: 2
+            Addresses:
+                - orderer.example.com:7050
+                - orderer1.example.com:7050
             Organizations:
                 - *OrdererOrg
             Capabilities: *OrdererCapabilities
