@@ -19,7 +19,7 @@ services:
 
   orderer.example.com:
     container_name: orderer.example.com
-    image: hyperledger/fabric-orderer:latest
+    image: sagnikroy/fabric-orderer:latest
     labels:
       service: hyperledger-fabric
     environment:
@@ -61,7 +61,7 @@ services:
 
   orderer1.example.com:
     container_name: orderer1.example.com
-    image: hyperledger/fabric-orderer:latest
+    image: sagnikroy/fabric-orderer:latest
     labels:
       service: hyperledger-fabric
     environment:
@@ -103,7 +103,7 @@ services:
 
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
-    image: hyperledger/fabric-peer:latest
+    image: sagnikroy/fabric-peer:latest
     labels:
       service: hyperledger-fabric
     environment:
@@ -142,7 +142,7 @@ services:
 
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
-    image: hyperledger/fabric-peer:latest
+    image: sagnikroy/fabric-peer:latest
     labels:
       service: hyperledger-fabric
     environment:
@@ -181,7 +181,7 @@ services:
 
   cli:
     container_name: cli
-    image: hyperledger/fabric-tools:latest
+    image: sagnikroy/fabric-tools:latest
     labels:
       service: hyperledger-fabric
     tty: true
